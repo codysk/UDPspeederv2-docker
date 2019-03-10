@@ -1,0 +1,15 @@
+From alpine:3.7
+MAINTAINER me@iskywind.com
+
+ADD speederv2_linux.tar.gz /home/speederv2
+COPY entrypoint.sh /home/speederv2/entrypoint.sh
+RUN { \
+	mv /home/speederv2/speederv2_amd64 /home/speederv2/speederv2; \
+	chmod +x /home/speederv2/speederv2; \
+	chmod +x /home/speederv2/entrypoint.sh; \
+}
+
+ENV CMDLINE_PARAMS="-c -l 0.0.0.0:1092 -r 127.0.0.1:1093 -k key -f 20:10 --mtu 350"
+
+WORKDIR /home/speederv2
+ENTRYPOINT ["/home/speederv2/entrypoint.sh"]
